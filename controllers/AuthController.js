@@ -13,7 +13,10 @@ export const Login = async(req, res)=>{
                 req.session.user_id = user.user_id;
                 req.session.user_name = user_name;
                 req.user_email = user.user_email;
-                res.status(200).json({status: 200, msg: "Login Successfully"});
+                res.status(200).json({
+                    status: 200,
+                    msg: "Login Successfully"
+                });
             }else{
                 res.status(400).json({status: 400, msg: "Login Failed"});
             }

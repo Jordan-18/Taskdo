@@ -6,5 +6,9 @@ const router = express.Router();
 
 router.post('/login',LoginValidation,Login);
 router.post('/register',RegisterValidation, Register);
+router.post('/logout', (req,res) => {
+    req.session.destroy();
+    res.status(200).json({status:200,msg:"Account Has Logout"})
+})
 
 export default router;

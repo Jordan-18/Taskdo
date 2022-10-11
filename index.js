@@ -36,7 +36,6 @@ app.use(CompanyRoute);
 app.use(ProjectRoute);
 app.use(Dotask);
 app.use(Team);
-// app.use(Main);
 
 app.get('/', async (req, res) => {
     try {

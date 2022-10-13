@@ -1,5 +1,6 @@
 import sequelize from "sequelize";
 import db from "../config/Database.js";
+import TeamForum from "./TeamForumModels.js";
 
 const {DataTypes} = sequelize;
 
@@ -18,6 +19,8 @@ const Team = db.define('teams', {
     updatedAt: 'updated_at',
     freezeTablename: true
 });
+
+Team.hasMany(TeamForum, {foreignKey: 'team_forum_team_id' })
 
 export default Team;
 

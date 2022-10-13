@@ -1,7 +1,5 @@
 import sequelize from "sequelize";
 import db from "../config/Database.js";
-import Team from "./TeamModel.js";
-import User from "./UserModel.js";
 
 const {DataTypes} = sequelize;
 
@@ -11,6 +9,7 @@ const TeamForum = db.define('teamforums', {
         primaryKey: true,
     },
     team_forum_user_id: DataTypes.STRING,
+    team_forum_user_name: DataTypes.STRING,
     team_forum_team_id: DataTypes.STRING,
 },{
     paranoid:true,
@@ -20,8 +19,6 @@ const TeamForum = db.define('teamforums', {
     freezeTablename: true
 });
 
-// TeamForum.hasOne(Team,{foreignKey: "team_forum_team_id"})
-// TeamForum.belongsTo(Team, {foreignKey: "team_forum_team_id"})
 
 export default TeamForum;
 

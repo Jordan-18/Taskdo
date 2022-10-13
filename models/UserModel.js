@@ -1,5 +1,7 @@
 import sequelize from "sequelize";
 import db from "../config/Database.js";
+import TeamForum from "./TeamForumModels.js";
+import Team from "./TeamModel.js";
 
 const {DataTypes} = sequelize;
 
@@ -21,6 +23,9 @@ const User = db.define('users', {
     updatedAt: 'updated_at',
     freezeTablename: true
 });
+
+// User.hasOne(Team, {foreignKey: 'team_lead' })
+// User.hasMany(TeamForum, { foreignKey: 'team_forum_user_id' })
 
 export default User;
 

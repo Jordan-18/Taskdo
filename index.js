@@ -6,7 +6,7 @@ import UserRoute from "./routers/UserRoute.js";
 import AuthRoute from "./routers/AuthRoute.js";
 import CompanyRoute from "./routers/CompanyRoute.js";
 import ProjectRoute from "./routers/ProjectRoute.js";
-import Dotask from "./routers/DoTaskRoute.js";
+import Task from "./routers/TaskRoute.js";
 import Team from "./routers/TeamRoute.js";
 import listEndpoints from "express-list-endpoints";
 import db from "./config/Database.js";
@@ -34,7 +34,7 @@ app.use(UserRoute);
 app.use(AuthRoute);
 app.use(CompanyRoute);
 app.use(ProjectRoute);
-app.use(Dotask);
+app.use(Task);
 app.use(Team);
 
 app.get('/', async (req, res) => {

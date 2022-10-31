@@ -38,25 +38,10 @@ export const CreateProject = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            var {
-                project_name,
-                project_level,
-                project_team_id,
-                project_lead,
-                project_company_id,
-                project_start,
-                project_end
-            } = req.body
-
+            let id = {project_id: uuidv4()}
             var data = {
-                project_id: uuidv4(),
-                project_name,
-                project_level,
-                project_team_id,
-                project_lead,
-                project_company_id,
-                project_start,
-                project_end
+                ...id,
+                ...req.body
             }
 
             await Project.create(data).then( (newproject, created) => {

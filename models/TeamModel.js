@@ -1,6 +1,7 @@
 import sequelize from "sequelize";
 import db from "../config/Database.js";
 import TeamForum from "./TeamForumModels.js";
+import User from "./UserModel.js";
 
 const {DataTypes} = sequelize;
 
@@ -20,7 +21,8 @@ const Team = db.define('teams', {
     freezeTablename: true
 });
 
-Team.hasMany(TeamForum, {foreignKey: 'team_forum_team_id' })
+Team.belongsTo(User,{foreignKey: 'team_lead'})
+Team.hasMany(TeamForum, {foreignKey: 'team_forum_team_id'})
 
 export default Team;
 

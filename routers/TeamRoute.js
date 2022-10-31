@@ -5,8 +5,8 @@ import {
     createTeam,
     updatenewTeam,
     deleteCompany,
-    getTeamForum,
-    getTeamForumById,
+    getTeamDetail,
+    getTeamDetailById,
     createTeamForum} from "../controllers/TeamController.js";
 import {TeamValidation, TeamForumValidation} from "../validation/Validation.js";
 
@@ -19,8 +19,9 @@ router.patch('/teams/:id',TeamValidation,updatenewTeam);
 router.delete('/teams',deleteCompany);
 
 // hidden
-router.get('/teamforums',getTeamForum);
-router.get('/teamforums/:id',getTeamForumById);
+router.get('/teamsdetail',getTeamDetail);
+router.get('/teamsdetail/:id',getTeamDetailById);
+
 router.post('/teamforums',TeamForumValidation,createTeamForum);
 
 export default router;

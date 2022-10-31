@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import TeamForum from "../models/TeamForumModels.js";
 import Team from "../models/TeamModel.js";
 import User from "../models/UserModel.js";
-import conn from "../config/Mysql.js";
-import sequelize from "sequelize";
 
 export const getTeam = async(req, res) => {
     try {
@@ -43,12 +41,10 @@ export const createTeam = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            const {team_name,team_lead,team_kode} =  req.body;
+            let id = {team_id : uuidv4()}
             let data = {
-                team_id : uuidv4(),
-                team_name,
-                team_lead,
-                team_kode
+                ...id,
+                ...req.body
             }
             
             await Team.create(data).then(function(newTeam, CreateTeam){
@@ -71,20 +67,13 @@ export const updatenewTeam = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            const {team_name,team_lead,team_kode} =  req.body;
             Team.findOne({
                 where: {
                     team_id: req.params.id
                 }
             }).then(async function(companies){
                 if(companies){
-                    let data = {
-                        team_name,
-                        team_lead,
-                        team_kode
-                    }
-
-                    await Team.update(data, {
+                    await Team.update(req.body, {
                         where:{
                             team_id: req.params.id
                         }
@@ -127,22 +116,29 @@ export const deleteCompany = async(req, res) => {
     }
 }
 
-export const getTeamForum = async(req,res) => {
+export const getTeamDetail = async(req,res) => {
     try {
         const response = await Team.findAll(
             {
                 attributes: [
                     'team_id',
                     'team_name',
-                    'team_lead',
                     'team_kode'
                 ],
                 include: [
                     {
+                        model: User,
+                        attributes: [
+                            ['user_id', 'lead_id'],
+                            ['user_name', 'lead_name'],
+                            ['user_email', 'lead_email']
+                        ]
+                    },
+                    {
                         model: TeamForum,
                         attributes: [
-                            'team_forum_user_id',
-                            'team_forum_user_name'
+                            ['team_forum_user_id','member_id'],
+                            ['team_forum_user_name', 'member_name']
                         ]
                     },
                 ],
@@ -160,7 +156,7 @@ export const getTeamForum = async(req,res) => {
     }
 }
 
-export const getTeamForumById = async(req,res) => {
+export const getTeamDetailById = async(req,res) => {
     try {
         const response = await Team.findAll(
             {
@@ -170,20 +166,28 @@ export const getTeamForumById = async(req,res) => {
                 attributes: [
                     'team_id',
                     'team_name',
-                    'team_lead',
                     'team_kode'
                 ],
                 include: [
                     {
+                        model: User,
+                        attributes: [
+                            ['user_id', 'lead_id'],
+                            ['user_name', 'lead_name'],
+                            ['user_email', 'lead_email']
+                        ]
+                    },
+                    {
                         model: TeamForum,
                         attributes: [
-                            'team_forum_user_id',
-                            'team_forum_user_name'
+                            ['team_forum_user_id','member_id'],
+                            ['team_forum_user_name', 'member_name']
                         ]
                     },
                 ],
             }
         );
+
         res.status(200).json({
             status:200, 
             msg: "TeamForum Data", 
@@ -203,11 +207,10 @@ export const createTeamForum = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            const {team_forum_user_id, team_forum_team_id} = req.body;
+            let id = {team_forum_id:uuidv4()}
             let data = {
-                team_forum_id:uuidv4(),
-                team_forum_user_id,
-                team_forum_team_id
+                ...id,
+                ...req.body
             }
 
             await TeamForum.create(data).then(function(newTeamForum, CreateTeamForum){

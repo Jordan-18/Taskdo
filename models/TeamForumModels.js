@@ -11,6 +11,7 @@ const TeamForum = db.define('teamforums', {
     team_forum_user_id: DataTypes.STRING,
     team_forum_user_name: DataTypes.STRING,
     team_forum_team_id: DataTypes.STRING,
+    team_forum_team_name: DataTypes.STRING,
 },{
     paranoid:true,
     deleteAt: 'delete_at',
@@ -18,7 +19,6 @@ const TeamForum = db.define('teamforums', {
     updatedAt: 'updated_at',
     freezeTablename: true
 });
-
 
 export default TeamForum;
 

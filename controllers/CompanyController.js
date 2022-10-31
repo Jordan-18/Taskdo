@@ -39,10 +39,10 @@ export const createCompany = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            const {company_name} =  req.body;
+            let id = {company_id : uuidv4()}
             let data = {
-                company_id : uuidv4(),
-                company_name: company_name
+                ...id,
+                ...req.body
             }
             
             await Company.create(data).then(function(newCompany, Createcompany){
@@ -65,18 +65,13 @@ export const updateCompany = async(req, res) => {
         if(!errors.isEmpty()){
             res.json({status: 500, msg: errors})
         }else{
-            const {company_name} =  req.body;
             Company.findOne({
                 where: {
                     company_id: req.params.id
                 }
             }).then(async function(companies){
                 if(companies){
-                    let data = {
-                        company_name: company_name
-                    }
-
-                    await Company.update(data, {
+                    await Company.update(req.body, {
                         where:{
                             company_id: req.params.id
                         }

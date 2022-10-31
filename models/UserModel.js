@@ -1,7 +1,5 @@
 import sequelize from "sequelize";
 import db from "../config/Database.js";
-import TeamForum from "./TeamForumModels.js";
-import Team from "./TeamModel.js";
 
 const {DataTypes} = sequelize;
 
